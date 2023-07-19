@@ -4,6 +4,8 @@ import seabreeze.spectrometers as sb
 from scipy.optimize import curve_fit
 from gpiozero import Button, LED
 
+# pip install seabreeze numpy scipy matplotlib gpiozero
+
 def get_dark_current(spec, integration_time):
     spec.integration_time_micros(integration_time)
     dark_spectrum = spec.spectrum(correct_dark_counts=True, correct_nonlinearity=True)
