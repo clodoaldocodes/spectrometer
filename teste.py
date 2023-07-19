@@ -45,7 +45,7 @@ def get_saturation_range(spec, fov_degrees, saturation_percentage=90):
     saturation_max = np.max(full_spectrum[full_spectrum < saturation_threshold])
     return saturation_min, saturation_max
 
-def save_spectrum_to_txt(filename, spectrum, integration_time):
+def save_spectrum_to_txt(filename, spectrum, integration_time, saturation_min, saturation_max):
     wavelengths = spec.wavelengths()  # Obter os comprimentos de onda correspondentes aos pixels
     intensities = spec.intensities()
 
@@ -53,7 +53,10 @@ def save_spectrum_to_txt(filename, spectrum, integration_time):
     #     raise ValueError("Os arrays de comprimento de onda e intensidade devem ter o mesmo tamanho.")
 
     data = np.column_stack((wavelengths, intensities))
-    header = f"Integration Time (micros): {integration_time}\nWavelength (nm), Intensity (Counts)"
+    header = f"Integration Time (micros): {integration_time} \
+        \nMin saturation: {saturation_min} \
+        \nMax saturation: {saturation_max} \
+        \nWavelength (nm), Intensity (Counts)"
     np.savetxt(filename, data, delimiter=',', header=header, comments='')
 
 
@@ -78,7 +81,7 @@ def obtain_measurement():
     filename = f"spectrum_{timestamp}_{measurement_num}_{optimal_integration_time}.txt"
     path = '/home/pi/spectrometer/measurements/'
     # save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time)
-    save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time)
+    save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time, saturation_min, saturation_max)
 
     time.sleep(5)  # Intervalo de espera entre medições (em segundos)
     print('Finalizou')
