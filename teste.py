@@ -47,10 +47,12 @@ def get_saturation_range(spec, fov_degrees, saturation_percentage=90):
 
 def save_spectrum_to_txt(filename, spectrum, integration_time):
     wavelengths = spec.wavelengths()  # Obter os comprimentos de onda correspondentes aos pixels
-    if len(wavelengths) != len(spectrum):
-        raise ValueError("Os arrays de comprimento de onda e intensidade devem ter o mesmo tamanho.")
+    intensities = spec.intensities()
 
-    data = np.column_stack((wavelengths, spectrum))
+    # if len(wavelengths) != len(spectrum):
+    #     raise ValueError("Os arrays de comprimento de onda e intensidade devem ter o mesmo tamanho.")
+
+    data = np.column_stack((wavelengths, intensities))
     header = f"Integration Time (micros): {integration_time}\nWavelength (nm), Intensity (Counts)"
     np.savetxt(filename, data, delimiter=',', header=header, comments='')
 
@@ -71,8 +73,6 @@ def obtain_measurement():
     # Remove valores fora do range de saturação
     signal_spectrum[signal_spectrum < saturation_min] = saturation_min
     signal_spectrum[signal_spectrum > saturation_max] = saturation_max
-
-    wavelengths = spec.wavelengths()
 
     timestamp = time.strftime("%Y%m%d_%H%M%S")
     filename = f"spectrum_{timestamp}_{measurement_num}_{optimal_integration_time}.txt"
