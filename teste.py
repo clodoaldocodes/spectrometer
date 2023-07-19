@@ -62,7 +62,8 @@ def save_spectrum_to_txt(filename, spectrum, integration_time, saturation_min, s
     np.savetxt(filename, data, delimiter=',', header=header, comments='')
 
 
-def obtain_measurement():
+def obtain_calibration():
+    global signal_spectrum, dark_spectrum, optimal_integration_time
     led19 = LED(19)
     led16 = LED(16)
 
@@ -88,6 +89,27 @@ def obtain_measurement():
     time.sleep(5)  # Intervalo de espera entre medições (em segundos)
     print('Finalizou')
     blink(led16,2)
+    return
+
+def obtain_measurement():
+    global signal_spectrum, dark_spectrum, optimal_integration_time
+    led19 = LED(19)
+    led16 = LED(16)
+
+    blink(led19,1)
+    print('Começou')
+    print(f"Usando o tempo de integração: {optimal_integration_time} microssegundos")
+
+    timestamp = time.strftime("%Y%m%d_%H%M%S")
+    filename = f"spectrum_{timestamp}_{measurement_num}_{optimal_integration_time}.txt"
+    path = '/home/pi/spectrometer/measurements/'
+    # save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time)
+    save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time, saturation_min, saturation_max)
+
+    time.sleep(5)  # Intervalo de espera entre medições (em segundos)
+    print('Finalizou')
+    blink(led16,2)
+    return
 
 def blink(led,times):
     it = 0
@@ -108,15 +130,17 @@ if __name__ == "__main__":
         min_integration_time = 1000
         max_integration_time = 100000
         step = 1000
-        PIN = 21
-        button = Button(PIN)
+        button21 = Button(21)
+        button13 = Button(13)
+        global signal_spectrum, dark_spectrum, optimal_integration_time
 
         try:
             measurement_num = 1
             saturation_min, saturation_max = get_saturation_range(spec, fov_degrees)
 
             while True:
-                button.when_pressed = obtain_measurement
+                button21.when_pressed = obtain_calibration
+                button13.when_pressed = obtain_measurement
                 measurement_num += 1
                 
         except KeyboardInterrupt:
