@@ -8,7 +8,7 @@
 
 '''
 def wavelengths(self):
-    """wavelength array of the spectrometer
+    - wavelength array of the spectrometer
 
     wavelengths in (nm) corresponding to each pixel of the spectrometer
 
@@ -16,11 +16,10 @@ def wavelengths(self):
     -------
     wavelengths : `numpy.ndarray`
         wavelengths in (nm)
-    """
     return self._wavelengths
 
 def intensities(self, correct_dark_counts=False, correct_nonlinearity=False):
-    """measured intensity array in (a.u.)
+    - measured intensity array in (a.u.)
 
     Measured intensities as numpy array returned by the spectrometer.
     The measuring behavior can be adjusted by setting the trigger mode.
