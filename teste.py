@@ -17,8 +17,6 @@ def get_signal_spectrum(spec, integration_time, dark_spectrum):
     return signal_spectrum
 
 def calculate_snr(signal_spectrum):
-    # Neste exemplo, calculamos o SNR simplesmente como a razão entre o valor máximo e o desvio padrão do espectro.
-    # Você pode usar outras métricas de SNR, dependendo dos requisitos do seu experimento.
     return np.max(signal_spectrum) / np.std(signal_spectrum)
 
 def gaussian_fit(x, a, b, c):
@@ -48,11 +46,8 @@ def get_saturation_range(spec, fov_degrees, saturation_percentage=90):
     return saturation_min, saturation_max
 
 def save_spectrum_to_txt(filename, spectrum, integration_time, saturation_min, saturation_max):
-    wavelengths = spec.wavelengths()  # Obter os comprimentos de onda correspondentes aos pixels
+    wavelengths = spec.wavelengths() 
     intensities = spec.intensities()
-
-    # if len(wavelengths) != len(spectrum):
-    #     raise ValueError("Os arrays de comprimento de onda e intensidade devem ter o mesmo tamanho.")
 
     data = np.column_stack((wavelengths, intensities))
     header = f"Integration Time (micros): {integration_time} \
@@ -76,7 +71,6 @@ def obtain_calibration():
     dark_spectrum = get_dark_current(spec, optimal_integration_time)
     signal_spectrum = get_signal_spectrum(spec, optimal_integration_time, dark_spectrum)
 
-    # Remove valores fora do range de saturação
     signal_spectrum[signal_spectrum < saturation_min] = saturation_min
     signal_spectrum[signal_spectrum > saturation_max] = saturation_max
 
@@ -86,7 +80,7 @@ def obtain_calibration():
     # save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time)
     save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time, saturation_min, saturation_max)
 
-    time.sleep(5)  # Intervalo de espera entre medições (em segundos)
+    time.sleep(5)  
     print('Finalizou')
     blink(led16,2)
     return
@@ -106,7 +100,7 @@ def obtain_measurement():
     # save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time)
     save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time, saturation_min, saturation_max)
 
-    time.sleep(5)  # Intervalo de espera entre medições (em segundos)
+    time.sleep(5)  
     print('Finalizou')
     blink(led16,2)
     return
