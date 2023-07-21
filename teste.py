@@ -19,8 +19,8 @@ def get_signal_spectrum(spec, integration_time, dark_spectrum):
 def calculate_snr(signal_spectrum):
     return np.max(signal_spectrum) / np.std(signal_spectrum)
 
-def gaussian_fit(x, a, b, c):
-    return a * np.exp(-0.5 * ((x - b) / c) ** 2)
+# def gaussian_fit(x, a, b, c):
+#     return a * np.exp(-0.5 * ((x - b) / c) ** 2)
 
 def find_optimal_integration_time(spec, fov_degrees=25, min_integration_time=1000, max_integration_time=100000, step=1000):
     optimal_integration_time = min_integration_time
@@ -56,13 +56,12 @@ def save_spectrum_to_txt(filename, spectrum, integration_time, saturation_min, s
         \nWavelength (nm), Intensity (Counts)"
     np.savetxt(filename, data, delimiter=',', header=header, comments='')
 
-
 def obtain_calibration():
     global signal_spectrum, dark_spectrum, optimal_integration_time
     led19 = LED(19)
     led16 = LED(16)
 
-    blink(led19,1)
+    blink(led19,2)
     print('Começou')
 
     optimal_integration_time = find_optimal_integration_time(spec, fov_degrees, min_integration_time, max_integration_time, step)
@@ -102,15 +101,16 @@ def obtain_measurement():
 
     time.sleep(5)  
     print('Finalizou')
-    blink(led16,2)
+    blink(led16,1)
     return
 
 def blink(led,times):
-    it = 0
+    it = 1
     while it <= times:
         led.on()
         time.sleep(1)
         led.off()
+        time.sleep(1)
         it = it + 1
 
 if __name__ == "__main__":
@@ -121,9 +121,9 @@ if __name__ == "__main__":
     else:
         spec = sb.Spectrometer(devices[0])
         fov_degrees = 25
-        min_integration_time = 1000
-        max_integration_time = 100000
-        step = 1000
+        min_integration_time = 100
+        max_integration_time = 10000
+        step = 100
         button21 = Button(21)
         button13 = Button(13)
         global signal_spectrum, dark_spectrum, optimal_integration_time
