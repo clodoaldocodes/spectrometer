@@ -6,7 +6,9 @@ $ pip install seabreeze numpy scipy matplotlib gpiozero
 
 # Definition of main functions used
 
-$ def wavelengths(self):
+$ 
+
+    def wavelengths(self):
         """wavelength array of the spectrometer
 
         wavelengths in (nm) corresponding to each pixel of the spectrometer
