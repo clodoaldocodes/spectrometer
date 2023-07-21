@@ -84,7 +84,7 @@ def intensities(self, correct_dark_counts=False, correct_nonlinearity=False):
 
 # MIT License
 
-Copyright (c) <2022> <Clodoaldo de Souza Faria Júnior>
+Copyright (c) <2023> <Clodoaldo de Souza Faria Júnior>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
