@@ -1,8 +1,39 @@
 ## Spectrometer codes
 
+# Introduction
+
+This repository contains Python scripts to perform measurements with a spectrometer using a Raspberry Pi. The spectrometer measurements are optimized for integration time, dark current correction, and avoiding saturation. The code is built on top of the python-seabreeze library to control the spectrometer.
+
+# Instalation
+
+To use the scripts in this repository, follow these steps:
+
+1 . Clone the repository:
+
+```git clone https://github.com/your-username/spectrometer-rpi.git```
+
+2. Install the required Python libraries using the requirements.txt file:
+
+```
+cd spectrometer-rpi
+pip install -r requirements.txt
+
+```
+
 # Requirements
 
 ```pip install seabreeze numpy scipy matplotlib gpiozero ```
+
+To use the scripts in this repository, you need:
+
+* Raspberry Pi (tested with Raspberry Pi 4 Model B)
+* Spectrometer supported by python-seabreeze (tested with Flame Miniature Spectrometer)
+* Python 3
+* Required Python libraries (see requirements.txt)
+
+# Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to create an issue or submit a pull request.
 
 # Definition of main functions used
 
