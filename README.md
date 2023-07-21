@@ -2,7 +2,7 @@
 
 # Requirements
 
-'''pip install seabreeze numpy scipy matplotlib gpiozero '''
+```pip install seabreeze numpy scipy matplotlib gpiozero ```
 
 # Definition of main functions used
 
