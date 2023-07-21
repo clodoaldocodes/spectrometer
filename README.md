@@ -17,7 +17,6 @@ To use the scripts in this repository, follow these steps:
 ```
 cd spectrometer-rpi
 pip install -r requirements.txt
-
 ```
 
 # Requirements
