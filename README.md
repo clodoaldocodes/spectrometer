@@ -6,7 +6,7 @@
 
 # Definition of main functions used
 
-'''
+```
 def wavelengths(self):
     - wavelength array of the spectrometer
 
@@ -80,7 +80,7 @@ def intensities(self, correct_dark_counts=False, correct_nonlinearity=False):
         # noinspection PyUnboundLocalVariable
         out += dark_offset
     return out
-'''
+```
 
 # MIT License
 
