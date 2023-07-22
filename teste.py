@@ -57,7 +57,7 @@ def save_spectrum_to_txt(filename, spectrum, integration_time, saturation_min, s
     np.savetxt(filename, data, delimiter=',', header=header, comments='')
 
 def obtain_calibration():
-    global signal_spectrum, dark_spectrum, optimal_integration_time
+    global signal_spectrum, dark_spectrum, optimal_integration_time, measurement_num
     led19 = LED(19)
     led16 = LED(16)
 
@@ -74,7 +74,7 @@ def obtain_calibration():
     signal_spectrum[signal_spectrum > saturation_max] = saturation_max
 
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    filename = f"spectrum_{timestamp}_{measurement_num}_{optimal_integration_time}.txt"
+    filename = f"spectrum_calibration_{timestamp}_{measurement_num}_{optimal_integration_time}.txt"
     path = '/home/pi/spectrometer/measurements/'
     # save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time)
     save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time, saturation_min, saturation_max)
@@ -82,10 +82,11 @@ def obtain_calibration():
     time.sleep(5)  
     print('Finalizou')
     blink(led16,2)
+    measurement_num += 1
     return
 
 def obtain_measurement():
-    global signal_spectrum, dark_spectrum, optimal_integration_time
+    global signal_spectrum, dark_spectrum, optimal_integration_time, measurement_num
     led19 = LED(19)
     led16 = LED(16)
 
@@ -94,7 +95,7 @@ def obtain_measurement():
     print(f"Usando o tempo de integração: {optimal_integration_time} microssegundos")
 
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    filename = f"spectrum_{timestamp}_{measurement_num}_{optimal_integration_time}.txt"
+    filename = f"spectrum_measurement_{timestamp}_{measurement_num}_{optimal_integration_time}.txt"
     path = '/home/pi/spectrometer/measurements/'
     # save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time)
     save_spectrum_to_txt(path + filename, signal_spectrum, optimal_integration_time, saturation_min, saturation_max)
@@ -102,6 +103,7 @@ def obtain_measurement():
     time.sleep(5)  
     print('Finalizou')
     blink(led16,1)
+    measurement_num += 1
     return
 
 def blink(led,times):
@@ -121,21 +123,20 @@ if __name__ == "__main__":
     else:
         spec = sb.Spectrometer(devices[0])
         fov_degrees = 25
-        min_integration_time = 100
+        min_integration_time = 10
         max_integration_time = 10000
-        step = 100
+        step = 10
         button21 = Button(21)
         button13 = Button(13)
-        global signal_spectrum, dark_spectrum, optimal_integration_time
+        global signal_spectrum, dark_spectrum, optimal_integration_time, measurement_num
+        measurement_num = 1
 
         try:
-            measurement_num = 1
             saturation_min, saturation_max = get_saturation_range(spec, fov_degrees)
 
             while True:
                 button21.when_pressed = obtain_calibration
                 button13.when_pressed = obtain_measurement
-                measurement_num += 1
                 
         except KeyboardInterrupt:
             print("Medições interrompidas pelo usuário.")
