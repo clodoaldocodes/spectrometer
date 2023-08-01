@@ -143,5 +143,7 @@ if __name__ == "__main__":
                     obtain_measurement()
                     time.sleep(2)
                 
+                print(measurement_num)
+                
         except KeyboardInterrupt:
             print("Medições interrompidas pelo usuário.")
