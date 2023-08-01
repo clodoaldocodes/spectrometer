@@ -12,7 +12,7 @@ spec = sb.Spectrometer.from_serial_number()
 PIN = 21
 button = Button(PIN)
 
-def say_hello():
+def obtainMeasurements():
     spec.integration_time_micros(20000)
 
     # print(spec.wavelengths())
@@ -44,4 +44,5 @@ def say_hello():
 
 while True:
     time.sleep(2)
-    button.when_pressed = say_hello
+    # button.when_pressed = 
+    obtainMeasurements()
