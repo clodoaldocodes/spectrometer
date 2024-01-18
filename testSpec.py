@@ -1,10 +1,6 @@
-import seabreeze.spectrometers as sb
-
-devices = sb.list_devices()
-spec = sb.Spectrometer(devices[0])
+import seabreeze
+seabreeze.use('pyseabreeze')
+from seabreeze.spectrometers import Spectrometer, list_devices
+devices = list_devices()
 print(devices)
-wavelengths = spec.wavelengths()
-intensities = spec.intensities()
-
-print(len(wavelengths))
-print(len(intensities))
+spec = Spectrometer.from_first_available()
