@@ -1,5 +1,7 @@
-
 from seabreeze.spectrometers import Spectrometer, list_devices
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 devices = list_devices()
 print(devices)
 spec = Spectrometer.from_first_available()
@@ -11,3 +13,7 @@ print(wavelengths)
 
 intensities = spec.intensities()
 print(intensities)
+
+sns.set()
+plt.plot(wavelengths, intensities)
+plt.savefig("/home/pi/spectrometer/foo.png")
