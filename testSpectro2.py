@@ -25,6 +25,7 @@ def measure_target(spec):
     plt.title('Espectro do Alvo Calibrado')
     plt.xlabel('Comprimento de Onda (nm)')
     plt.ylabel('Intensidade Calibrada')
+    plt.savefig("foog.png")
     plt.show()
 
 # Encontrar e inicializar o espectrômetro
@@ -34,7 +35,7 @@ if not devices:
     exit()
 
 spec = sb.Spectrometer(devices[0])
-spec.integration_time_micros(10000)  # Ajustar o tempo de integração conforme necessário
+spec.integration_time_micros(1000)  # Ajustar o tempo de integração conforme necessário
 
 # Calibrar o espectrômetro
 calibration_spectrum = perform_calibration(spec)
